@@ -1,0 +1,46 @@
+version: '3'
+
+networks:
+  rede:
+
+volumes:
+  data:
+
+services:
+
+  db-postgres:
+    container_name: db-postgres
+    image: postgres:9.5-alpine
+    restart: always
+    ports:
+      - "8888:5432" # Expose port 8888
+    hostname: postgres # postgres hostname
+    environment: # root username and password
+      - POSTGRES_PASSWORD=a
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=wallet
+    volumes:
+      - data:/app
+    networks:
+      - rede
+
+
+  web-api:
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    image: web-api
+    ports:
+      - "8080:8080"
+      - "5005:5005"
+    networks:
+      - rede
+    volumes:
+      - data:/app
+    depends_on:
+      - db-postgres
+    environment:
+      - PROFILE=test
+      - DEBUG_OPTIONS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005 -Xmx1G -Xms128m -XX:MaxMetaspaceSize=128m
+      #JDK  08: -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005 -Xmx1G -Xms128m -XX:MaxMetaspaceSize=128m
+      #JDK>=09: -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005 -Xmx1G -Xms128m -XX:MaxMetaspaceSize=128m
