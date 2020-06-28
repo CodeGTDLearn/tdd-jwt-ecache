@@ -11,7 +11,7 @@ import java.io.IOException;
 @Component
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
-    // PASS0 01) CUSTOMIZAR MENSAGEM DE 'NEGATIVA DE ACESSO/AUTENTICACAO' AOS ENDPOINTS PROTEGIDOS
+    //todo: SpringSecurity+Jwt 2 - Customiza mensagem de Negativa de Acesso, devido JWT invalido
     @Override
     public void commence(
             HttpServletRequest request ,

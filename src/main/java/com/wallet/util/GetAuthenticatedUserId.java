@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
+//todo: SpringSecurity+Jwt 9.4 - Captura informacoes do Usuario autenticado
 @Component
 public class GetAuthenticatedUserId {
 
@@ -17,6 +18,8 @@ public class GetAuthenticatedUserId {
     }
 
     public static Long getAuthenticatedUserId() {
+
+        //todo: SpringSecurity+Jwt 9.4.1 - getName() Referese-se ao EMAIL do usuario autenticado
         try {
             Optional<User> user = staticService
                     .findByEmail(
@@ -25,6 +28,7 @@ public class GetAuthenticatedUserId {
                                     .getAuthentication()
                                     .getName());
 
+            //todo: SpringSecurity+Jwt 9.4.2 - Usuario encontrado retorna ID dele
             if (user.isPresent()) {
                 return user.get().getId();
             } else {

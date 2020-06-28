@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
+//todo: SpringSecurity+Jwt 8.6 - EndPoint GERADOR  dos tolkens
 @RestController
 @RequestMapping("/auth")
 public class AuthenticationController {
@@ -35,14 +36,16 @@ public class AuthenticationController {
     private UserDetailsService userDetailsService;
 
 
+    //todo: SpringSecurity+Jwt 8.6.1 - Metodo GERADOR  dos tolkens
     @PostMapping
     public ResponseEntity<Response<TokenDTO>> gerarTokenJwt(
             @Valid @RequestBody JwtAuthenticationDTO jwtAuthDto ,
             BindingResult result)
             throws AuthenticationException {
-
+        //todo: SpringSecurity+Jwt 8.6.2 - TolkenDTO payload
         Response<TokenDTO> response = new Response<>();
 
+        //todo: SpringSecurity+Jwt 8.6.4 - Checa erros no BindingResult
         if (result.hasErrors()) {
             result.getAllErrors()
                     .forEach(
@@ -51,6 +54,7 @@ public class AuthenticationController {
             return ResponseEntity.badRequest().body(response);
         }
 
+        //todo: SpringSecurity+Jwt 8.6.5 - Checa usuario de acordom com email+password
         Authentication authentication =
                 authenticationManager.authenticate(
                         new UsernamePasswordAuthenticationToken(
@@ -63,10 +67,11 @@ public class AuthenticationController {
                 userDetailsService
                         .loadUserByUsername(jwtAuthDto.getEmail());
 
+        //todo: SpringSecurity+Jwt 8.6.6 - Gera Tolken(jwtTokenUtil), pois nao houve erro algum ate aqui
         String token = jwtTokenUtil.getToken(userDetails);
 
+        //todo: SpringSecurity+Jwt 8.6.7 - Passa/devolve o token na resposta
         response.setData(new TokenDTO(token));
-
         return ResponseEntity.ok(response);
     }
 }

@@ -22,29 +22,34 @@ import com.wallet.security.JwtAuthenticationTokenFilter;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
+//todo: SpringSecurity+Jwt 6 - Implementar WebSecurityConfigurerAdapter
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+    //todo: SpringSecurity+Jwt 6.1 - Injetar
     @Autowired
     private JwtAuthenticationEntryPoint unauthorizedHandler;
 
+    //todo: SpringSecurity+Jwt 6.2 - Injetar
     @Autowired
     private UserDetailsService userDetailsService;
 
+    //todo: SpringSecurity+Jwt 6.3 - Fornecer o 'userDetailsService' injetado acima
     @Autowired
     public void configureAuthentication(AuthenticationManagerBuilder auth)
             throws Exception {
 
-        //inserir o 'userDetailsService' injetado, logo acima
         auth.userDetailsService(this.userDetailsService)
                 .passwordEncoder(passwordEncoder());
     }
 
+    //todo: SpringSecurity+Jwt 6.4 - Definir este bean AUTHENTICATION_MANAGER
     @Bean(name = BeanIds.AUTHENTICATION_MANAGER)
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
 
+    //todo: SpringSecurity+Jwt 6.5 - Definir este bean BCryptPasswordEncoder
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -58,6 +63,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
+        //todo: SpringSecurity+Jwt 7 - Bloqueat rotas
         http
                 .csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
@@ -65,24 +71,26 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
 
-                //ROTAS LIBERADAS
+                //todo: SpringSecurity+Jwt 7.1 - Rotas liberadas(authorizeRequests)
                 .authorizeRequests().antMatchers(
                 "/auth/**" ,
                 "/configuration/security" ,
                 "/webjars/**" ,
                 "/user/**" ,
+                //Swagger routes
                 "/v2/api-docs" ,
                 "/swagger-resources/**" ,
                 "/swagger-ui.html" ,
                 "/hello-world")
 
-                //ROTAS AUTENTICADAS/PROTEGIDAS: TODAS AS OUTRAS
+                //todo: SpringSecurity+Jwt 7.2 - Rotas bloqueadas(TODAS AS OUTRAS)
                 .permitAll().anyRequest().authenticated();
 
         http.addFilterBefore(
                 authenticationTokenFilterBean() ,
                 UsernamePasswordAuthenticationFilter.class);
 
+        //todo: SpringSecurity+Jwt 7.3 - Controle de cache em HEADER)
         http.headers().cacheControl();
     }
 }

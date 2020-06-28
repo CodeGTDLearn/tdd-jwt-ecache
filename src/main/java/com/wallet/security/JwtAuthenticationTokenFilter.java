@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+//todo: SpringSecurity+Jwt 8.1 - extends OncePerRequestFilter
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
     private static final String AUTH_HEADER = "Authorization";
@@ -23,9 +24,11 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
     @Autowired
     private UserDetailsService userDetailsService;
 
+    //todo: SpringSecurity+Jwt 8.2 - injeta jwtTokenUtil
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
 
+    //todo: SpringSecurity+Jwt 8.4 - doFilterInternal - PAsso-a-Passo explicando nos comments
     @Override
     protected void doFilterInternal(
             HttpServletRequest request ,
@@ -33,10 +36,10 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             FilterChain chain)
             throws ServletException, IOException {
 
-        // 1 - GETTA A CHAVE 'AUTHORIZATION' DO HEADER
+        // 1 - GETTA A key 'AUTHORIZATION' DO HEADER
         String token = request.getHeader(AUTH_HEADER);
 
-        // 2 - CHECA SE A CHAVE 'AUTHORIZATION' E NULA OU INICIA COM 'BEARER'
+        // 2 - CHECA SE A key 'AUTHORIZATION' E NULA OU INICIA COM 'BEARER'
         if (token != null && token.startsWith(BEARER_PREFIX)) {
 
             // 3 - EXTRAI O TOKEN, EXCLUINDO A PALAVRA 'BEARER'
@@ -51,10 +54,10 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         // b) SE 'JA' NAO EXISTE CONTEXTO-DE-AUTENTICACAO
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
-            // 6 - BUSCA O OBJETO USUARIO - PARTINGO DO USERNAME ENCONTRADO NO TOKEN
+            // 6 - BUSCA O OBJETO USUARIO - PARTINdO DO USERNAME ENCONTRADO NO TOKEN
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
 
-            // 7 - CHECA EXPIRACAO DO TOKEN
+            // 7 - CHECA EXPIRACAO/EXISTENCIA DO TOKEN
             if (jwtTokenUtil.validToken(token)) {
 
                 // 8 - SETA CONTEXTO-DE-AUTENTICACAO, COMO AUTENTICADO
@@ -72,7 +75,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             }
         }
 
-        // 9 - REQUEST PROSSEGUE, COMO CONTEXTO-DE-AUTENTICACAO, COMO AUTENTICADO
+        // 9 - REQUEST PROSSEGUE AUTENTICADO, NO CONTEXTO-DE-AUTENTICACAO
         chain.doFilter(request ,response);
     }
 }

@@ -1,16 +1,16 @@
 package com.wallet.controller;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.wallet.dto.WalletItemDTO;
+import com.wallet.entity.User;
+import com.wallet.entity.UserWallet;
+import com.wallet.entity.Wallet;
+import com.wallet.entity.WalletItem;
+import com.wallet.service.UserService;
+import com.wallet.service.UserWalletService;
+import com.wallet.service.WalletItemService;
+import com.wallet.util.enums.TypeEnum;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.BDDMockito;
@@ -28,17 +28,16 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.wallet.dto.WalletItemDTO;
-import com.wallet.entity.User;
-import com.wallet.entity.UserWallet;
-import com.wallet.entity.Wallet;
-import com.wallet.entity.WalletItem;
-import com.wallet.service.UserService;
-import com.wallet.service.UserWalletService;
-import com.wallet.service.WalletItemService;
-import com.wallet.util.enums.TypeEnum;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
+
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -63,7 +62,8 @@ public class WalletItemControllerTest {
 	private static final String DESCRIPTION = "Conta de Luz";
 	private static final BigDecimal VALUE = BigDecimal.valueOf(65);
 	private static final String URL = "/wallet-item";
-	
+
+	//todo: SpringSecurity+Jwt 9.6 - TEste com autenticacao - @WithMockUser(SpringSecurity)
 	@Test
 	@WithMockUser
 	public void testSave() throws Exception {
@@ -207,7 +207,8 @@ public class WalletItemControllerTest {
 		.andExpect(jsonPath("$.errors[0]").value("WalletItem não encontrado"));
 		
 	}
-	
+
+	//todo: Roles 8 - Adaptando Test a Role criada .
 	@Test
 	@WithMockUser(username = "admin@admin.com", roles = {"ADMIN"})
 	public void testDelete() throws JsonProcessingException, Exception {

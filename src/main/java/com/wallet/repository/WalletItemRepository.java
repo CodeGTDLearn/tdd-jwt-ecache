@@ -18,6 +18,8 @@ public interface WalletItemRepository extends JpaRepository<WalletItem, Long> {
 
 	List<WalletItem> findByWalletIdAndType(Long wallet, TypeEnum type);
 	
-	@Query("select sum(value) from WalletItem wi where wi.wallet.id = :wallet")
+	@Query("select sum(value) from " +
+			"WalletItem wi where " +
+			"wi.wallet.id = :wallet")
 	BigDecimal sumByWalletId(@Param("wallet") Long wallet);
 }

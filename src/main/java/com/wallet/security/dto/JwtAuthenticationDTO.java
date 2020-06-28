@@ -6,6 +6,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.NotNull;
 
+//todo: SpringSecurity+Jwt 8.6.3 - Classe/Campos usados na Autenticacao e obtencao do Tolken
 @SuppressWarnings("deprecation")
 @Data
 public class JwtAuthenticationDTO {

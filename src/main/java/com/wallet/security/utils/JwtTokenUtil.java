@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+//todo: SpringSecurity+Jwt 8.3 - injeta JwtTokenUtil - Validacao dos tokens
 @Component
 public class JwtTokenUtil {
 
@@ -19,6 +20,8 @@ public class JwtTokenUtil {
     static final String CLAIM_KEY_AUDIENCE = "audience";
     static final String CLAIM_KEY_CREATED = "created";
 
+
+    //todo: SpringSecurity+Jwt 8.3.1 - chave aleatoria p/ geracao dos tolkens
     @Value("${jwt.secret}")
     private String secret;
 
@@ -60,7 +63,14 @@ public class JwtTokenUtil {
         Map<String, Object> claims = new HashMap<>();
         claims.put(CLAIM_KEY_USERNAME ,userDetails.getUsername());
         claims.put(CLAIM_KEY_CREATED ,new Date());
-        userDetails.getAuthorities().forEach(authority -> claims.put(CLAIM_KEY_ROLE ,authority.getAuthority()));
+
+        //todo: Roles 6.4 - Seta as Roles dentro do token .
+        userDetails
+                .getAuthorities()
+                .forEach(authority ->
+        //todo: Roles 6.4.1 - Seta as Key[CLAIM_KEY_ROLE] e inserir a role via authority.getAuthority() .
+                        claims.put(CLAIM_KEY_ROLE ,authority.getAuthority())
+                );
 
         return generateToken(claims);
     }

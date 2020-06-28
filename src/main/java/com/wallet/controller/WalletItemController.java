@@ -58,6 +58,7 @@ public class WalletItemController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
+    //todo: SpringSecurity+Jwt 9.5 - Busca walletItems por carteria + entre datas
     @GetMapping(value = "/{wallet}")
     public ResponseEntity<Response<Page<WalletItemDTO>>> findBetweenDates(
             @PathVariable("wallet") Long walletId ,
@@ -67,12 +68,14 @@ public class WalletItemController {
 
         Response<Page<WalletItemDTO>> response = new Response<>();
 
+        //todo: SpringSecurity+Jwt 9.5.1 - Busca walletItems por carteria + entre datas
         Optional<UserWallet> walletBelongsToTheUser =
                 userWalletService
                         .findByUsersIdAndWalletId(
                                 GetAuthenticatedUserId.getAuthenticatedUserId() ,
                                 walletId);
 
+        //todo: SpringSecurity+Jwt 9.5.2 - Carteira na encontrada para este usuario
         if (!walletBelongsToTheUser.isPresent()) {
             response
                     .getErrors()
@@ -140,6 +143,8 @@ public class WalletItemController {
         return ResponseEntity.ok().body(response);
     }
 
+    //todo: Roles 7 - Definindo Roles em EndPoints do controller (pd passar mais de Roles) .
+    //Aqui esta sendo passado somente uma, mas poderia ter mais de uma
     @DeleteMapping(value = "/{walletItemId}")
     @PreAuthorize("hasAnyRole('ADMIN')")
     public ResponseEntity<Response<String>> delete(@PathVariable("walletItemId") Long walletItemId) {

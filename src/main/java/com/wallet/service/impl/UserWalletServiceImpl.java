@@ -19,6 +19,7 @@ public class UserWalletServiceImpl implements UserWalletService{
 		return repository.save(uw);
 	}
 
+	//todo: SpringSecurity+Jwt 9.2 - Busca carteira por(UserID+WalletID), no service
 	@Override
 	public Optional<UserWallet> findByUsersIdAndWalletId(Long userId, Long walletId) {
 		return repository.findByUsersIdAndWalletId(userId, walletId);

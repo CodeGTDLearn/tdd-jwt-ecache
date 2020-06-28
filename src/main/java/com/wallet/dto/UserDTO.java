@@ -24,6 +24,7 @@ public class UserDTO {
 	@Length(min=6, message="A senha deve conter no mínimo 6 caracteres")
 	private String password;
 
+	//todo: Roles 4 - Criar Pattern de Validacao p/ o campo role(aceita so  Roles pre-definidos no ENUM)
 	@NotNull(message = "Informe uma role de acesso")
 	@Pattern(regexp="^(ROLE_ADMIN|ROLE_USER)$", message = "Para a role de acesso somente são aceitos os valores ROLE_ADMIN ou ROLE_USER")
 	private String role;

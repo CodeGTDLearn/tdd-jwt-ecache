@@ -1,8 +1,11 @@
 package com.wallet.controller;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.wallet.dto.UserDTO;
+import com.wallet.entity.User;
+import com.wallet.service.UserService;
+import com.wallet.util.enums.RoleEnum;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.BDDMockito;
@@ -17,12 +20,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.wallet.dto.UserDTO;
-import com.wallet.entity.User;
-import com.wallet.service.UserService;
-import com.wallet.util.enums.RoleEnum;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -76,6 +75,8 @@ public class UserControllerTest {
 		u.setEmail(EMAIL);
 		u.setName(NAME);
 		u.setPassword(PASSWORD);
+
+		//todo: Roles 8.2.1 - Adaptando Test a Role criada .
 		u.setRole(RoleEnum.ROLE_ADMIN);
 		
 		return u;
@@ -87,6 +88,8 @@ public class UserControllerTest {
 		dto.setEmail(email);
 		dto.setName(name);
 		dto.setPassword(password);
+
+		//todo: Roles 8.2.2 - Adaptando Test a Role criada .
 		dto.setRole(RoleEnum.ROLE_ADMIN.toString());
 		
 		ObjectMapper mapper = new ObjectMapper();

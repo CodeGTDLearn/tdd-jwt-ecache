@@ -14,10 +14,10 @@
     </parent>
 
     <groupId>com.wallet</groupId>
-    <artifactId>wallet</artifactId>
+    <artifactId>tdd-wallet</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
-    <name>wallet</name>
+    <name>tdd-wallet</name>
     <description>API para controle de carteira</description>
 
     <properties>
@@ -81,11 +81,13 @@
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
 
+<!--        //todo: SpringSecurity+Jwt 1 - Dependencias-->
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-test</artifactId>
         </dependency>
 
+<!--        //todo: SpringSecurity+Jwt 1 - Dependencias-->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt</artifactId>

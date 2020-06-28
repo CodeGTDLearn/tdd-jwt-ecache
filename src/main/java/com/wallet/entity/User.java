@@ -30,6 +30,9 @@ public class User implements Serializable {
     @Column(nullable = false)
     private String email;
 
+    //todo: Roles 2 - Inserir a Role na entidade que POSSUIRA esta esta role
+    //todo: Roles 3 - Criar 'FlyWay Version' p/ inserir a 'Role coluna' (V3__users_roles)
+    // na respectiva tabela no DB(V3__users_roles.sql)
     @NotNull
     @Enumerated(EnumType.STRING)
     private RoleEnum role;

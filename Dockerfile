@@ -1,20 +1,23 @@
-#ALTERANDO VERSO DO JDK
-#>IDE - ALTERACOES:
+############################
+#CONFIG PARA DEBUG ROTATIVO#
+############################
+#1 ALTERANDO VERSO DO JDK (SE NECESSARIO)
+#1.1: IDE - ALTERACOES: (CLIQUE NA PASTA DO PROJETO + TECLA 'F4')
 # - Project / Project JDK
 # - Project / Project Language Level
 # - Modules / Language Level
 # - Platform Setting / SDK
 # - (IDE): Maven Clean + Package
-#>POM - ALTERACOES
+#1.2: POM - ALTERACOES
 # - <java.version>11</java.version>
 # - Plugin
 #   <artifactId>spring-boot-maven-plugin</artifactId>
 #   <configuration>
 #       <excludeDevtools>false</excludeDevtools>
-#> DOCKER-COMPOSE
-# - ADDITIONAL_OPTS
-#   *JDK11: ADDITIONAL_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005 -Xmx1G -Xms128m -XX:MaxMetaspaceSize=128m
-#   *JDK08: ADDITIONAL_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005 -Xmx1G -Xms128m -XX:MaxMetaspaceSize=128m
+#1.3: DOCKER-COMPOSE
+# - DEBUG_OPTIONS
+#   *JDK11: DEBUG_OPTIONS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005 -Xmx1G -Xms128m -XX:MaxMetaspaceSize=128m
+#   *JDK08: DEBUG_OPTIONS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005 -Xmx1G -Xms128m -XX:MaxMetaspaceSize=128m
 
 
 #JDK11

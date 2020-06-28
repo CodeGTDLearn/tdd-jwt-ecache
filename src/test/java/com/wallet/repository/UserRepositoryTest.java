@@ -31,6 +31,8 @@ public class UserRepositoryTest {
 		u.setName("Set up User");
 		u.setPassword("Senha123");
 		u.setEmail(EMAIL);
+
+		//todo: Roles 8.1 - Adaptando Test a Role criada .
 		u.setRole(RoleEnum.ROLE_ADMIN);
 		
 		repository.save(u);
@@ -49,6 +51,8 @@ public class UserRepositoryTest {
 		u.setName("Teste");
 		u.setPassword("123456");
 		u.setEmail("teste@teste.com");
+
+		//todo: Roles 8.2 - Adaptando Test a Role criada .
 		u.setRole(RoleEnum.ROLE_ADMIN);
 		
 		User response = repository.save(u);
