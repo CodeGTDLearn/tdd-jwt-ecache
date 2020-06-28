@@ -1,8 +1,11 @@
-  
+<!--  todo: ecache2 - arquivo xml-->
 <ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:noNamespaceSchemaLocation="ehcache.xsd">
-	<cache name="findByWalletAndType" 
-		maxEntriesLocalHeap="1000"
-		timeToLiveSeconds="3600">
-	</cache>
+         xsi:noNamespaceSchemaLocation="ehcache.xsd">
+
+    <!-- todo: ecache3 - configuracao, do 'ServiceMethod' que sera 'cacheado'-->
+    <cache
+            name="findByWalletAndType"
+            maxEntriesLocalHeap="1000" <!-- todo: ecache3 - item alocados-->
+            timeToLiveSeconds="3600">  <!-- todo: ecache3 - expiracao deste cache-->
+    </cache>
 </ehcache>
